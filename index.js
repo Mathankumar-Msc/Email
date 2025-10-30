@@ -24,9 +24,9 @@ app.post("/contact", async (req, res) => {
   try {
     // Use direct Gmail SMTP settings and increase timeouts
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+    host: "smtp-relay.brevo.com", // Works on Render
+  port: 587,
+  secure: false,
       auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS,
