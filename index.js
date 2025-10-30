@@ -28,6 +28,9 @@ app.post("/contact", async (req, res) => {
         user: EMAIL_USER,
         pass: EMAIL_PASS,
       },
+         connectionTimeout: 15000, // 15 seconds
+      greetingTimeout: 10000,
+      socketTimeout: 15000,
     });
 
     await transporter.sendMail({
