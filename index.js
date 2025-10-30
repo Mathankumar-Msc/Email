@@ -22,18 +22,19 @@ app.post("/contact", async (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
 
   try {
-    // Use direct Gmail SMTP settings and increase timeouts
+    // Configure transporter for Gmail with TLS
     const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com", // Works on Render
-  port: 587,
-  secure: false,
+      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
       auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS,
       },
-      connectionTimeout: 20000, // 20 seconds
-      greetingTimeout: 15000,
-      socketTimeout: 20000,
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
 
     await transporter.sendMail({
