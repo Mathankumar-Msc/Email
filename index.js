@@ -22,17 +22,18 @@ app.post("/contact", async (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
 
   try {
+    // Use direct Gmail SMTP settings and increase timeouts
     const transporter = nodemailer.createTransport({
-       host: "smtp.gmail.com",
-  port: 465, // Use 465 for SSL
-  secure: true, // true for port 465, false for 587
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS,
       },
-         connectionTimeout: 15000, // 15 seconds
-      greetingTimeout: 10000,
-      socketTimeout: 15000,
+      connectionTimeout: 20000, // 20 seconds
+      greetingTimeout: 15000,
+      socketTimeout: 20000,
     });
 
     await transporter.sendMail({
@@ -45,7 +46,10 @@ app.post("/contact", async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     console.error("Email Error:", err);
-    res.status(500).json({ error: "Email sending failed" });
+    // Improved error response for debugging
+    res
+      .status(500)
+      .json({ error: "Email sending failed", details: err.message });
   }
 });
 
