@@ -23,7 +23,9 @@ app.post("/contact", async (req, res) => {
 
   try {
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+       host: "smtp.gmail.com",
+  port: 465, // Use 465 for SSL
+  secure: true, // true for port 465, false for 587
       auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS,
